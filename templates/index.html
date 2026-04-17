@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Persona Card Refinement — Accenture</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+
+  <!-- ─── Header ─────────────────────────────────────────────────────────── -->
+  <header class="header" role="banner">
+    <a href="/" class="header__logo" aria-label="Accenture home">
+      <svg class="header__logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M8 6L22 16L8 26" stroke="#A100FF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="header__logo-text">accenture</span>
+    </a>
+    <span class="header__title">Persona Card Refinement Platform</span>
+  </header>
+
+  <!-- ─── Main ────────────────────────────────────────────────────────────── -->
+  <main class="main" id="main-content">
+
+    <h1 class="page-title">Persona Card Refinement</h1>
+    <p class="page-subtitle">
+      Enter your organization's details and select an executive persona to generate a
+      company-specific, contextualized persona card powered by AI.
+    </p>
+
+    <!-- ─── Input Form ──────────────────────────────────────────────────── -->
+    <div class="card">
+      <div class="card__header">
+        <span class="card__badge">Step 1</span>
+        <div>
+          <div class="card__title">Organization &amp; Persona Details</div>
+          <div class="card__subtitle">All fields are required</div>
+        </div>
+      </div>
+
+      <form id="persona-form" novalidate aria-label="Persona refinement form">
+        <div class="form-grid">
+
+          <div class="form-group form-group--full">
+            <label for="company-name">Company Name <span class="required" aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="company-name"
+              name="company_name"
+              placeholder="e.g. Accenture Federal Services"
+              autocomplete="organization"
+              aria-required="true"
+              aria-describedby="company-name-error"
+            />
+            <span class="field-error" id="company-name-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="industry">Industry <span class="required" aria-hidden="true">*</span></label>
+            <select id="industry" name="industry" aria-required="true" aria-describedby="industry-error">
+              <option value="" disabled selected>Select industry</option>
+            </select>
+            <span class="field-error" id="industry-error" role="alert"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="market">Market <span class="required" aria-hidden="true">*</span></label>
+            <select id="market" name="market" aria-required="true" aria-describedby="market-error">
+              <option value="" disabled selected>Select market</option>
+            </select>
+            <span class="field-error" id="market-error" role="alert"></span>
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="persona">Executive Persona <span class="required" aria-hidden="true">*</span></label>
+            <select id="persona" name="persona" aria-required="true" aria-describedby="persona-error">
+              <option value="" disabled selected>Select persona</option>
+            </select>
+            <span class="field-error" id="persona-error" role="alert"></span>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="refine-btn" class="btn btn--primary" aria-label="Submit and refine persona card">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            Refine with AI
+          </button>
+          <button type="button" id="reset-btn" class="btn btn--outline">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ─── Original Persona Card ──────────────────────────────────────── -->
+    <section id="original-card-section" class="section-hidden" aria-live="polite" aria-label="Original persona card">
+      <div class="section-divider">
+        <span class="section-divider__text">Step 2 — Review Persona Card</span>
+      </div>
+
+      <div class="card">
+        <div class="card__header">
+          <span class="card__badge">Original</span>
+          <div>
+            <div class="card__title">Default Persona Card</div>
+            <div class="card__subtitle" id="original-persona-label">—</div>
+          </div>
+        </div>
+        <div id="original-card"></div>
+      </div>
+    </section>
+
+    <!-- ─── Refined Persona Card ───────────────────────────────────────── -->
+    <section id="refined-card-section" class="section-hidden" aria-live="polite" aria-label="Refined persona card">
+      <div class="section-divider">
+        <span class="section-divider__text">Step 3 — AI-Refined Persona Card</span>
+      </div>
+
+      <div class="card" style="border-top: 3px solid var(--acc-purple-dark);">
+        <div class="card__header">
+          <span class="card__badge card__badge--refined">Refined</span>
+          <div>
+            <div class="card__title">Contextualized Persona Card</div>
+            <div class="card__subtitle" id="refined-persona-label">—</div>
+          </div>
+        </div>
+        <div id="refined-card"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── Loading Overlay ─────────────────────────────────────────────────── -->
+  <div id="loading-overlay" class="loading-overlay" role="status" aria-label="Processing refinement">
+    <div class="spinner" aria-hidden="true"></div>
+    <p class="loading-overlay__text">Refining persona card with AI…</p>
+  </div>
+
+  <!-- ─── Toast Notification ──────────────────────────────────────────────── -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
